@@ -1,7 +1,11 @@
-import { Flats } from "../models/FlatsData.js";
+import { Flats } from "../models/Flats.js";
 
-async function updateFlatsData(data) {
-    return await Flats.create({ flatData: data });
+async function addFlatsData(data) {
+    try {
+        return await Flats.insertMany(data);
+    } catch (e) {
+        console.error(e);
+    }
 }
 
-export { updateFlatsData };
+export { addFlatsData };

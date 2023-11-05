@@ -1,6 +1,10 @@
 import { Urls } from "../models/Urls.js";
 
 async function getFlatUrls() {
-    return await Urls.find({});
+    try {
+        return await Urls.find({});
+    } catch (e) {
+        console.error(e);
+    }
 }
 export { getFlatUrls };

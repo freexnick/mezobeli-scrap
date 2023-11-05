@@ -2,7 +2,13 @@ import mongoose from "mongoose";
 
 const FlatsSchema = new mongoose.Schema(
     {
-        flatData: Object,
+        url: String,
+        header: Array,
+        flat: String,
+        priceDetails: Object,
+        room: String,
+        img: String,
+        color: String,
     },
     { timestamps: true }
 );

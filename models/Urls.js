@@ -2,7 +2,10 @@ import mongoose from "mongoose";
 
 const UrlsSchema = new mongoose.Schema(
     {
-        flatUrls: Array,
+        url: {
+            type: String,
+            unique: true,
+        },
     },
     {
         timestamps: true,
