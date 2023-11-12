@@ -17,9 +17,13 @@ async function flatData(url) {
 }
 
 async function getUrlList() {
-    const flatUrls = (await getFlatUrls())
-        ?.map((flat) => flat.url)
-        .filter((flat) => flat !== undefined);
+    const flatData = await getFlatUrls();
+    const flatUrls = [];
+    for (let flat of flatData) {
+        if (flat.url) {
+            flatUrls.push(flat.url);
+        }
+    }
     return flatUrls;
 }
 
@@ -28,17 +32,14 @@ async function generateTree() {
         let tree = [];
         const flatList = await getUrlList();
         if (flatList) {
-            tree = (
-                await Promise.allSettled(
-                    flatList.map(async (url) => await flatData(url))
-                )
-            )
-                .map((result) => {
-                    if (result.status === "fulfilled") {
-                        return result.value;
-                    }
-                })
-                .filter((tree) => tree !== undefined);
+            const treeData = await Promise.allSettled(
+                flatList.map(async (url) => await flatData(url))
+            );
+            for (let data of treeData) {
+                if (data.status === "fulfilled") {
+                    tree.push(data.value);
+                }
+            }
         }
         return tree;
     } catch (e) {
